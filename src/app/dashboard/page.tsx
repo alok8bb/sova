@@ -1,3 +1,7 @@
-export default function Dashboard() {
-  return <h1>Dashboard</h1>;
+export default function DashboardHome() {
+  return (
+    <div>
+      <h1>Solaris Board</h1>
+    </div>
+  );
 }
