@@ -25,7 +25,6 @@ import {
 import { useCallback, useEffect, useState, useMemo } from "react";
 import dynamic from "next/dynamic";
 import { BINANCE_PRICE_API, SOL_STATUS_API } from "@/lib/strings";
-import { getStatusColor } from "@/lib/utils";
 
 const TradingViewWidget = dynamic(
   () =>
@@ -157,9 +156,17 @@ export default function DashboardHome() {
                 </CardTitle>
                 <div className="flex items-center space-x-1">
                   <div
-                    className={`h-2 w-2 rounded-full ${getStatusColor(
-                      networkStatus.indicator
-                    )}`}
+                    className={`h-2 w-2 rounded-full ${
+                      networkStatus.indicator === "none"
+                        ? "bg-solana-green"
+                        : networkStatus.indicator === "minor"
+                        ? "bg-yellow-500"
+                        : networkStatus.indicator === "major"
+                        ? "bg-orange-500"
+                        : networkStatus.indicator === "critical"
+                        ? "bg-red-500"
+                        : "bg-gray-500"
+                    }`}
                   />
                   <span className="text-xs text-muted-foreground">
                     {networkStatus.indicator === "none"

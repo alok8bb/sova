@@ -11,6 +11,8 @@ import {
   ChartCandlestick,
   Telescope,
   LayoutDashboard,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 
 const navItems = [
@@ -25,16 +27,23 @@ const navItems = [
   },
 ];
 
-export default function Sidebar() {
+export default function Sidebar({
+  isCollapsed,
+  setCollapsed,
+}: {
+  isCollapsed: boolean;
+  setCollapsed: (value: boolean) => void;
+}) {
   const pathname = usePathname();
 
   return (
     <aside
       className={cn(
-        "fixed top-0 left-0 z-20 h-screen -translate-x-full lg:translate-x-0 ease-in-out duration-300 w-64"
+        "fixed top-0 left-0 z-20 h-screen ease-in-out duration-300",
+        isCollapsed ? "w-16" : "w-64"
       )}
     >
-      <div className="relative h-full flex flex-col px-3 py-4 overflow-y-auto shadow-md bg-zinc-900">
+      <div className="relative h-full flex flex-col px-3 py-4 overflow-y-auto shadow-md border">
         <Button
           className={cn("transition-transform ease-in-out duration-300 mb-1")}
           variant="link"
@@ -45,13 +54,15 @@ export default function Sidebar() {
             className="flex items-center gap-2 text-white"
           >
             <LayoutDashboard className="w-6 h-6 mr-1" />
-            <h1
-              className={cn(
-                "font-bold text-lg whitespace-nowrap ease-in-out duration-300"
-              )}
-            >
-              Solaris Board
-            </h1>
+            {!isCollapsed && (
+              <h1
+                className={cn(
+                  "font-bold text-lg whitespace-nowrap ease-in-out duration-300"
+                )}
+              >
+                Solaris Board
+              </h1>
+            )}
           </Link>
         </Button>
         <nav className="space-y-2 mt-5">
@@ -61,18 +72,32 @@ export default function Sidebar() {
               <Link
                 key={item.name}
                 href={item.href}
-                className={`flex items-center space-x-3 p-2 px-4 rounded-lg transition-colors ${
+                className={`flex items-center space-x-3 p-2 ${
+                  isCollapsed ? "px-2" : "px-4"
+                } rounded-lg transition-colors ${
                   isActive
                     ? "bg-gray-700 text-white"
                     : "text-gray-300 hover:bg-gray-700 hover:text-white"
                 }`}
               >
                 <item.icon className="h-4 w-4" />
-                <span>{item.name}</span>
+                {!isCollapsed && <span>{item.name}</span>}
               </Link>
             );
           })}
         </nav>
+        <Button
+          className="absolute bottom-4 right-2"
+          variant="ghost"
+          size="icon"
+          onClick={() => setCollapsed(!isCollapsed)}
+        >
+          {isCollapsed ? (
+            <ChevronRight className="h-4 w-4" />
+          ) : (
+            <ChevronLeft className="h-4 w-4" />
+          )}
+        </Button>
       </div>
     </aside>
   );
