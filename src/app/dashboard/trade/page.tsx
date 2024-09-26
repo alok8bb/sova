@@ -19,7 +19,6 @@ import {
   RUGCHECK_REPORT_URL,
 } from "@/lib/strings";
 import { getFilteredPair, Pair, TokenApiResponse } from "@/lib/token.api";
-import { init } from "@jup-ag/terminal";
 import "@jup-ag/terminal/css";
 import {
   AlertTriangle,
@@ -28,6 +27,7 @@ import {
   XCircle,
   Clipboard,
 } from "lucide-react";
+import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 
 const fetchTokenData = async (address: string): Promise<RugcheckResponse> => {
@@ -42,7 +42,7 @@ const fetchTokenData = async (address: string): Promise<RugcheckResponse> => {
   }
 };
 
-export default function TradePage() {
+function TradePage() {
   const [address, setAddress] = useState<string>("");
   const [pairAddress, setPairAddress] = useState<string | null>(null);
   const [tokenData, setTokenData] = useState<RugcheckResponse | null>(null);
@@ -51,11 +51,17 @@ export default function TradePage() {
 
   // idk some ssr issue `document not found`
   useEffect(() => {
-    init({
-      displayMode: "integrated",
-      integratedTargetId: "integrated-terminal",
-      endpoint: MAINNET_BETA_RPC,
-    });
+    async function initJup() {
+      if (typeof window !== "undefined") {
+        const jup = await import("@jup-ag/terminal");
+        jup.init({
+          displayMode: "integrated",
+          integratedTargetId: "integrated-terminal",
+          endpoint: MAINNET_BETA_RPC,
+        });
+      }
+    }
+    initJup();
   }, []);
 
   const handleCheck = async (): Promise<void> => {
@@ -279,6 +285,8 @@ export default function TradePage() {
     </div>
   );
 }
+
+export default dynamic(() => Promise.resolve(TradePage), { ssr: false });
 
 const getRiskIcon = (level: Risk["level"]): React.ReactElement => {
   switch (level) {
