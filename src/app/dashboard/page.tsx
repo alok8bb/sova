@@ -36,7 +36,10 @@ const TradingViewWidget = dynamic(
 
 export default function DashboardHome() {
   const connection = useMemo(
-    () => new Connection(process.env.NEXT_RPC_URL || clusterApiUrl("devnet")),
+    () =>
+      new Connection(
+        process.env.NEXT_PUBLIC_RPC_URL || clusterApiUrl("devnet")
+      ),
     []
   );
 
