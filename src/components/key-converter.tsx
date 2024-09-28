@@ -2,7 +2,7 @@ import { ArrowLeftRight } from "lucide-react";
 import { Button } from "./ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { useState } from "react";
-// @ts-ignore
+// @ts-expect-error - module doesn't have types
 import b58 from "b58";
 
 export default function KeyConverter() {
