@@ -10,10 +10,10 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { getNews, NewsItem } from "@/lib/news.api";
 import {
+  clusterApiUrl,
   Connection,
   EpochInfo,
   LAMPORTS_PER_SOL,
-  clusterApiUrl,
 } from "@solana/web3.js";
 import {
   BarChart,
@@ -35,7 +35,10 @@ const TradingViewWidget = dynamic(
 );
 
 export default function DashboardHome() {
-  const connection = useMemo(() => new Connection(clusterApiUrl("devnet")), []);
+  const connection = useMemo(
+    () => new Connection(process.env.NEXT_RPC_URL || clusterApiUrl("devnet")),
+    []
+  );
 
   const [epochInfo, setEpochInfo] = useState<EpochInfo>({
     epoch: 0,
@@ -249,7 +252,7 @@ export default function DashboardHome() {
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">
-                  {totalSupply.toFixed(2)}
+                  {totalSupply.toLocaleString()}
                 </div>
                 <p className="text-xs text-muted-foreground">SOL</p>
               </CardContent>
