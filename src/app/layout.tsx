@@ -18,7 +18,7 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Solaris Board",
+  title: "Sova Screener",
   description: "solana essentials, streamlined",
 };
 
