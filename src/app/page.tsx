@@ -12,6 +12,18 @@ export default function Home() {
         <img src="/logo.svg" alt="Sova" className="w-40 h-40" />
         <h1 className="font-semibold text-2xl">Sova Screener</h1>
         <p>essential crypto utilities in one place</p>
+        <div className="flex flex-col gap-4 items-center justify-center my-10">
+          <Button onClick={() => router.push("/dashboard")}>
+            Continue to dashboard
+          </Button>
+          <p>
+            or
+          </p>
+          <p>
+            put <span className="font-mono">/sol/token-address</span> to see the
+            token details
+          </p>
+        </div>
       </div>
     </div>
   );
