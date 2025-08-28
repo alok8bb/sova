@@ -1,5 +1,8 @@
 
-# **Solaris Board**
+# **Sova Screener**
+
+> [!NOTE]  
+> I'll be converting this website to all trade related tools. If you have any good ideas please hit me up on telegram @broken_vortex
 
 A web dashboard built with Next.js and essential Solana ecosystem tools to streamline Solana resources in one place.
 
